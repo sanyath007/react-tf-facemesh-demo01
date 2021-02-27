@@ -37,7 +37,37 @@ function App() {
       },
       scale: 0.8
     });
+
+    setInterval(() => {
+      detect(net);
+    }, 100);
   };
+
+  // Detect function
+  const detect = async (net) => {
+    if (
+      typeof webcamRef.current !== 'undefined' &&
+      webcamRef.current !== null &&
+      webcamRef.current.video.readyState === 4
+    ) {
+      // Get video properties
+      const video = webcamRef.current.video;
+      const videoWidth = video.videoWidth;
+      const videiHeight = video.videiHeight;
+      // Set video width
+      webcamRef.current.video.width = videoWidth;
+      webcamRef.current.video.height = videiHeight;
+      // Set canvas width
+      canvasRef.current.width = videoWidth;
+      canvasRef.current.height = videiHeight;
+      // Make detections
+      const face = await net.estimateFaces(video);
+      console.log(face);
+      // Get canvas context for drawing
+    }
+  };
+
+  runFacemesh();
 
   return (
     <div className="App">
