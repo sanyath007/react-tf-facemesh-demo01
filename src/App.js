@@ -1,9 +1,16 @@
 /**
  * Work flow
- * - install dependencies
- * - import dependencies
- * - setup webcam and canvas
- * - define references to those
+ * - install dependencies DONE
+ * - import dependencies DONE
+ * - setup webcam and canvas DONE
+ * - define references to those DONE
+ * - load facemesh DONE
+ * - detect function
+ * - drawing utilities
+ * - load triangulation
+ * - setup triangle path
+ * - setup point drawing
+ * - and drawMesh to detect function
  */
 import React, { useRef } from 'react';
 import * as tf from '@tensorflow/tfjs';
@@ -12,12 +19,24 @@ import Webcam from 'react-webcam';
 import './App.css';
 
 function App() {
+  // Define references
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const videoConstraints = {
     width: 1280,
     height: 720,
     facingMode: 'user'
+  };
+
+  // Load facemesh
+  const runFacemesh = async () => {
+    const net = await facemesh.load({
+      inputResolution: {
+        width: 640,
+        height: 480
+      },
+      scale: 0.8
+    });
   };
 
   return (
