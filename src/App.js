@@ -5,7 +5,7 @@
  * - setup webcam and canvas DONE
  * - define references to those DONE
  * - load facemesh DONE
- * - detect function
+ * - detect function DONE
  * - drawing utilities
  * - load triangulation
  * - setup triangle path
@@ -17,6 +17,7 @@ import * as tf from '@tensorflow/tfjs';
 import * as facemesh from '@tensorflow-models/facemesh';
 import Webcam from 'react-webcam';
 import './App.css';
+import { drawMesh } from './utils';
 
 function App() {
   // Define references
@@ -52,8 +53,8 @@ function App() {
     ) {
       // Get video properties
       const video = webcamRef.current.video;
-      const videoWidth = video.videoWidth;
-      const videiHeight = video.videiHeight;
+      const videoWidth = webcamRef.current.video.videoWidth;
+      const videiHeight = webcamRef.current.video.videoHeight;
       // Set video width
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videiHeight;
@@ -64,6 +65,8 @@ function App() {
       const face = await net.estimateFaces(video);
       console.log(face);
       // Get canvas context for drawing
+      const ctx = canvasRef.current.getContext('2d');
+      drawMesh(face, ctx);
     }
   };
 
